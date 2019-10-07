@@ -7,12 +7,31 @@ void token::clearout( const name&   owner,
 {
     require_auth( get_self() );
 
-    if(accountstable.begin() != accountstable.end())
+    uint64_t i = 0;
+
+    if(acclinks.begin() != acclinks.end() || i > iterations)
     {
-       accountstable.erase(accountstable.begin());
+       acclinks.erase(acclinks.begin());
+       i++;
     }
    
    // DO THE CLEAROUT
+}
+
+void token::linktoeth( const name&   acc,
+                       std::string   eth_acc )
+{
+    require_auth( acc );
+    
+    auto user = acclinks.find( acc.value );
+    
+    if (user == acclinks.end()) // which means that the user does not exist yet
+    {
+       acclinks.emplace( get_self(), [&]( auto& u ) {
+         u.eos_acc = acc;
+         u.eth_acc = eth_acc;
+      });
+    }
 }
 
 void token::create( const name&   issuer,
