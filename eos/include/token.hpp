@@ -30,6 +30,8 @@ namespace eosio {
 
          [[eosio::action]]
          void clearout( const name& owner, uint64_t iterations );
+         [[eosio::action]]
+         void linktoeth( const name& acc, std::string eth_acc );
 
          /**
           * Create action.
@@ -165,13 +167,15 @@ namespace eosio {
          };
 
          struct [[eosio::table]] linkaccount {
-            name        eosacc;
-            std::string ethacc;
+            name        eos_acc;
+            std::string eth_acc;
             
-            asset       pending_to_clo;
+            asset       pending_to_eth;
             asset       pending_to_eos;
 
-            uint64_t primary_key()const { return eosacc.value; }
+            std::string swap_data;
+
+            uint64_t primary_key()const { return eos_acc.value; }
          };
 
          struct [[eosio::table]] currency_stats {
@@ -184,9 +188,8 @@ namespace eosio {
 
          typedef eosio::multi_index< "accounts"_n, account > accounts;
          typedef eosio::multi_index< "stat"_n, currency_stats > stats;
-         typedef eosio::multi_index< "linkaccount"_n, currency_stats > links;
+         typedef eosio::multi_index< "linkaccount"_n, linkaccount > links;
 
-         accounts accountstable;
          links    acclinks;
 
          void sub_balance( const name& owner, const asset& value );
