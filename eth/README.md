@@ -1,1 +1,1 @@
-Deployed at [0x0f1c12e9ac46111e28d9cb8bfc35a65f393b59ac](https://explorer2.callisto.network/addr/0x0f1c12e9ac46111e28d9cb8bfc35a65f393b59ac)
+Deployed at [0xd4643473243573565d6fd75eb428668edcea1c4d](https://explorer2.callisto.network/addr/0xd4643473243573565d6fd75eb428668edcea1c4d)
