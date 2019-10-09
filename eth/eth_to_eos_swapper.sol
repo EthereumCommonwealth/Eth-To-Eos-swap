@@ -3,6 +3,7 @@ pragma solidity ^0.4.25;
 
 contract EthToEosSwaplinker {
     event SwapToEOS(address indexed _from, string indexed _to, uint _amount, string _data);
+    event SwapFromEOS(address indexed _from, string indexed _to, uint _amount, string _data);
     event SwapRejected(address indexed _from, string indexed _to, uint _amount, string _data);
     event RequestSwap(address indexed _from, string indexed _to, uint _amount, string _data);
     
@@ -81,7 +82,7 @@ contract EthToEosSwaplinker {
         crosschain_links[msg.sender].pending_to_eos = 0;
     }
     
-    function process_swap(address clo_address, string eos_address, uint amount, string data) only_owner
+    function process_swap_to_eos(address clo_address, string eos_address, uint amount, string data) only_owner
     {
         require(crosschain_links[clo_address].exist);
         require(crosschain_links[clo_address].pending_to_eos == amount);
@@ -90,6 +91,16 @@ contract EthToEosSwaplinker {
         crosschain_links[clo_address].pending_to_eos = 0;
         
         emit SwapToEOS(clo_address, eos_address, amount, data);
+    }
+    
+    function process_swap_from_eos(address clo_address, string eos_address, uint amount, string data) only_owner
+    {
+        require(crosschain_links[clo_address].exist);
+        
+        swapped_to_eos -= amount;
+        crosschain_links[clo_address].pending_withdrawal = amount;
+        
+        emit SwapFromEOS(clo_address, eos_address, amount, data);
     }
     
     function reject_swap(address clo_address, string eos_address, uint amount, string data) only_owner
