@@ -3,6 +3,24 @@
 		"constant": false,
 		"inputs": [
 			{
+				"name": "eos_address",
+				"type": "string"
+			},
+			{
+				"name": "data",
+				"type": "string"
+			}
+		],
+		"name": "request_withdrawal",
+		"outputs": [],
+		"payable": false,
+		"stateMutability": "nonpayable",
+		"type": "function"
+	},
+	{
+		"constant": false,
+		"inputs": [
+			{
 				"name": "clo_address",
 				"type": "address"
 			},
@@ -16,10 +34,10 @@
 			},
 			{
 				"name": "data",
-				"type": "bytes"
+				"type": "string"
 			}
 		],
-		"name": "process_swap",
+		"name": "reject_swap",
 		"outputs": [],
 		"payable": false,
 		"stateMutability": "nonpayable",
@@ -53,13 +71,13 @@
 			},
 			{
 				"name": "data",
-				"type": "bytes"
+				"type": "string"
 			}
 		],
-		"name": "request_swap",
+		"name": "request_swap_cancel",
 		"outputs": [],
-		"payable": true,
-		"stateMutability": "payable",
+		"payable": false,
+		"stateMutability": "nonpayable",
 		"type": "function"
 	},
 	{
@@ -91,24 +109,6 @@
 		"type": "function"
 	},
 	{
-		"constant": false,
-		"inputs": [
-			{
-				"name": "eos_address",
-				"type": "string"
-			},
-			{
-				"name": "data",
-				"type": "bytes"
-			}
-		],
-		"name": "request_swap_cancel",
-		"outputs": [],
-		"payable": false,
-		"stateMutability": "nonpayable",
-		"type": "function"
-	},
-	{
 		"constant": true,
 		"inputs": [],
 		"name": "active_links",
@@ -120,77 +120,6 @@
 		],
 		"payable": false,
 		"stateMutability": "view",
-		"type": "function"
-	},
-	{
-		"constant": false,
-		"inputs": [
-			{
-				"name": "eos_address",
-				"type": "string"
-			},
-			{
-				"name": "data",
-				"type": "bytes"
-			}
-		],
-		"name": "request_withdrawal",
-		"outputs": [],
-		"payable": false,
-		"stateMutability": "nonpayable",
-		"type": "function"
-	},
-	{
-		"constant": true,
-		"inputs": [
-			{
-				"name": "",
-				"type": "address"
-			}
-		],
-		"name": "crosschain_links",
-		"outputs": [
-			{
-				"name": "clo_address",
-				"type": "address"
-			},
-			{
-				"name": "eos_address",
-				"type": "string"
-			},
-			{
-				"name": "exist",
-				"type": "bool"
-			},
-			{
-				"name": "pending_to_eos",
-				"type": "uint256"
-			},
-			{
-				"name": "pending_withdrawal",
-				"type": "uint256"
-			},
-			{
-				"name": "swap_metadata",
-				"type": "bytes"
-			}
-		],
-		"payable": false,
-		"stateMutability": "view",
-		"type": "function"
-	},
-	{
-		"constant": false,
-		"inputs": [
-			{
-				"name": "eos_address",
-				"type": "string"
-			}
-		],
-		"name": "link",
-		"outputs": [],
-		"payable": false,
-		"stateMutability": "nonpayable",
 		"type": "function"
 	},
 	{
@@ -210,10 +139,77 @@
 			},
 			{
 				"name": "data",
-				"type": "bytes"
+				"type": "string"
 			}
 		],
-		"name": "reject_swap",
+		"name": "process_swap",
+		"outputs": [],
+		"payable": false,
+		"stateMutability": "nonpayable",
+		"type": "function"
+	},
+	{
+		"constant": true,
+		"inputs": [
+			{
+				"name": "",
+				"type": "address"
+			}
+		],
+		"name": "crosschain_links",
+		"outputs": [
+			{
+				"name": "eos_address",
+				"type": "string"
+			},
+			{
+				"name": "exist",
+				"type": "bool"
+			},
+			{
+				"name": "pending_to_eos",
+				"type": "uint256"
+			},
+			{
+				"name": "pending_withdrawal",
+				"type": "uint256"
+			},
+			{
+				"name": "swap_metadata",
+				"type": "string"
+			}
+		],
+		"payable": false,
+		"stateMutability": "view",
+		"type": "function"
+	},
+	{
+		"constant": false,
+		"inputs": [
+			{
+				"name": "eos_address",
+				"type": "string"
+			},
+			{
+				"name": "data",
+				"type": "string"
+			}
+		],
+		"name": "request_swap",
+		"outputs": [],
+		"payable": true,
+		"stateMutability": "payable",
+		"type": "function"
+	},
+	{
+		"constant": false,
+		"inputs": [
+			{
+				"name": "eos_address",
+				"type": "string"
+			}
+		],
+		"name": "link",
 		"outputs": [],
 		"payable": false,
 		"stateMutability": "nonpayable",
@@ -245,7 +241,7 @@
 			{
 				"indexed": false,
 				"name": "_data",
-				"type": "bytes"
+				"type": "string"
 			}
 		],
 		"name": "SwapToEOS",
@@ -272,7 +268,7 @@
 			{
 				"indexed": false,
 				"name": "_data",
-				"type": "bytes"
+				"type": "string"
 			}
 		],
 		"name": "SwapRejected",
@@ -299,7 +295,7 @@
 			{
 				"indexed": false,
 				"name": "_data",
-				"type": "bytes"
+				"type": "string"
 			}
 		],
 		"name": "RequestSwap",
