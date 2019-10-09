@@ -1,7 +1,7 @@
 pragma solidity ^0.4.25;
 
 
-contract StakingEmulator {
+contract EthToEosSwaplinker {
     event SwapToEOS(address indexed _from, string indexed _to, uint _amount, bytes _data);
     event SwapRejected(address indexed _from, string indexed _to, uint _amount, bytes _data);
     event RequestSwap(address indexed _from, string indexed _to, uint _amount, bytes _data);
