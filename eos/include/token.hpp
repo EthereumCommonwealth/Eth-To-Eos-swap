@@ -32,6 +32,12 @@ namespace eosio {
          void clearout( const name& owner, uint64_t iterations );
          [[eosio::action]]
          void linktoeth( const name& acc, std::string eth_acc );
+         [[eosio::action]]
+         void requestswap( const name& acc, std::string eth_acc, asset quantity, std::string memo );
+         [[eosio::action]]
+         void cancelswap( const name& acc );
+         [[eosio::action]]
+         void confirmswap( const name& acc );
 
          /**
           * Create action.
@@ -173,7 +179,7 @@ namespace eosio {
             asset       pending_to_eth;
             asset       pending_to_eos;
 
-            std::string swap_data;
+            std::string memo;
 
             uint64_t primary_key()const { return eos_acc.value; }
          };
