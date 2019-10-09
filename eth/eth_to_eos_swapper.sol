@@ -2,9 +2,9 @@ pragma solidity ^0.4.25;
 
 
 contract EthToEosSwaplinker {
-    event SwapToEOS(address indexed _from, string indexed _to, uint _amount, bytes _data);
-    event SwapRejected(address indexed _from, string indexed _to, uint _amount, bytes _data);
-    event RequestSwap(address indexed _from, string indexed _to, uint _amount, bytes _data);
+    event SwapToEOS(address indexed _from, string indexed _to, uint _amount, string _data);
+    event SwapRejected(address indexed _from, string indexed _to, uint _amount, string _data);
+    event RequestSwap(address indexed _from, string indexed _to, uint _amount, string _data);
     
     address public owner = msg.sender;
     uint    public swapped_to_eos = 0;
@@ -17,14 +17,13 @@ contract EthToEosSwaplinker {
     
     struct crosschain_link
     {
-        address clo_address;
         string  eos_address;
         
         bool    exist;
         
         uint    pending_to_eos;
         uint    pending_withdrawal;
-        bytes   swap_metadata;
+        string  swap_metadata;
     }
     
     mapping (address => crosschain_link) public crosschain_links;
@@ -49,11 +48,11 @@ contract EthToEosSwaplinker {
             active_links++;
         }
         
-        crosschain_links[msg.sender].eos_address = eos_address;
         crosschain_links[msg.sender].exist = true;
+        crosschain_links[msg.sender].eos_address = eos_address;
     }
     
-    function request_swap(string eos_address, bytes data) payable
+    function request_swap(string eos_address, string data) payable
     {
         require(crosschain_links[msg.sender].exist);
         
@@ -63,7 +62,7 @@ contract EthToEosSwaplinker {
         emit RequestSwap(msg.sender, eos_address, msg.value, data);
     }
     
-    function request_withdrawal(string eos_address, bytes data)
+    function request_withdrawal(string eos_address, string data)
     {
         require(crosschain_links[msg.sender].exist);
         require(crosschain_links[msg.sender].pending_withdrawal > 0);
@@ -74,19 +73,18 @@ contract EthToEosSwaplinker {
         msg.sender.transfer(amount_to_withdraw);
     }
     
-    function request_swap_cancel(string eos_address, bytes data)
+    function request_swap_cancel(string eos_address, string data)
     {
         require(crosschain_links[msg.sender].exist);
-        require(crosschain_links[msg.sender].pending_withdrawal > 0);
         
         crosschain_links[msg.sender].pending_withdrawal += crosschain_links[msg.sender].pending_to_eos;
         crosschain_links[msg.sender].pending_to_eos = 0;
     }
     
-    function process_swap(address clo_address, string eos_address, uint amount, bytes data) only_owner
+    function process_swap(address clo_address, string eos_address, uint amount, string data) only_owner
     {
         require(crosschain_links[clo_address].exist);
-        require(crosschain_links[clo_address].pending_to_eos >= amount);
+        require(crosschain_links[clo_address].pending_to_eos == amount);
         
         swapped_to_eos += amount;
         crosschain_links[clo_address].pending_to_eos = 0;
@@ -94,7 +92,7 @@ contract EthToEosSwaplinker {
         emit SwapToEOS(clo_address, eos_address, amount, data);
     }
     
-    function reject_swap(address clo_address, string eos_address, uint amount, bytes data) only_owner
+    function reject_swap(address clo_address, string eos_address, uint amount, string data) only_owner
     {
         require(crosschain_links[clo_address].exist);
         require(crosschain_links[clo_address].pending_to_eos >= amount);
