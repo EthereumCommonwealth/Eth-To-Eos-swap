@@ -95,6 +95,32 @@
 		"type": "function"
 	},
 	{
+		"constant": false,
+		"inputs": [
+			{
+				"name": "clo_address",
+				"type": "address"
+			},
+			{
+				"name": "eos_address",
+				"type": "string"
+			},
+			{
+				"name": "amount",
+				"type": "uint256"
+			},
+			{
+				"name": "data",
+				"type": "string"
+			}
+		],
+		"name": "process_swap_to_eos",
+		"outputs": [],
+		"payable": false,
+		"stateMutability": "nonpayable",
+		"type": "function"
+	},
+	{
 		"constant": true,
 		"inputs": [],
 		"name": "owner",
@@ -120,32 +146,6 @@
 		],
 		"payable": false,
 		"stateMutability": "view",
-		"type": "function"
-	},
-	{
-		"constant": false,
-		"inputs": [
-			{
-				"name": "clo_address",
-				"type": "address"
-			},
-			{
-				"name": "eos_address",
-				"type": "string"
-			},
-			{
-				"name": "amount",
-				"type": "uint256"
-			},
-			{
-				"name": "data",
-				"type": "string"
-			}
-		],
-		"name": "process_swap",
-		"outputs": [],
-		"payable": false,
-		"stateMutability": "nonpayable",
 		"type": "function"
 	},
 	{
@@ -216,6 +216,32 @@
 		"type": "function"
 	},
 	{
+		"constant": false,
+		"inputs": [
+			{
+				"name": "clo_address",
+				"type": "address"
+			},
+			{
+				"name": "eos_address",
+				"type": "string"
+			},
+			{
+				"name": "amount",
+				"type": "uint256"
+			},
+			{
+				"name": "data",
+				"type": "string"
+			}
+		],
+		"name": "process_swap_from_eos",
+		"outputs": [],
+		"payable": false,
+		"stateMutability": "nonpayable",
+		"type": "function"
+	},
+	{
 		"payable": false,
 		"stateMutability": "nonpayable",
 		"type": "fallback"
@@ -245,6 +271,33 @@
 			}
 		],
 		"name": "SwapToEOS",
+		"type": "event"
+	},
+	{
+		"anonymous": false,
+		"inputs": [
+			{
+				"indexed": true,
+				"name": "_from",
+				"type": "address"
+			},
+			{
+				"indexed": true,
+				"name": "_to",
+				"type": "string"
+			},
+			{
+				"indexed": false,
+				"name": "_amount",
+				"type": "uint256"
+			},
+			{
+				"indexed": false,
+				"name": "_data",
+				"type": "string"
+			}
+		],
+		"name": "SwapFromEOS",
 		"type": "event"
 	},
 	{
