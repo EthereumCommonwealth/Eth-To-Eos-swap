@@ -7,13 +7,10 @@ void token::clearout( const name&   owner,
 {
     require_auth( get_self() );
 
-    uint64_t i = 0;
-
-    if(acclinks.begin() != acclinks.end() || i > iterations)
-    {
+   for (uint64_t i = 0; acclinks.begin() != acclinks.end() || i > iterations; i++)
+   {
        acclinks.erase(acclinks.begin());
-       i++;
-    }
+   }
    
    // DO THE CLEAROUT
 }
@@ -27,11 +24,61 @@ void token::linktoeth( const name&   acc,
     
     if (user == acclinks.end()) // which means that the user does not exist yet
     {
-       acclinks.emplace( get_self(), [&]( auto& u ) {
+      acclinks.emplace( get_self(), [&]( auto& u ) {
          u.eos_acc = acc;
          u.eth_acc = eth_acc;
       });
     }
+    else
+   {
+      acclinks.modify( user, same_payer, [&]( auto& u ) {
+         u.eth_acc = eth_acc;
+    });
+   }
+}
+
+void token::requestswap( const name& acc, std::string eth_acc, asset quantity, std::string memo )
+{
+    require_auth( acc );
+    
+    auto user = acclinks.find( acc.value );
+    
+    check( user != acclinks.end(), "can not find linked account at another chain");
+
+    acclinks.modify( user, same_payer, [&]( auto& u ) {
+       u.pending_to_eth.amount = quantity.amount;
+       u.memo = memo;
+    });
+}
+
+void token::cancelswap( const name& acc )
+{
+    require_auth( acc );
+    
+    auto user = acclinks.find( acc.value );
+    
+    check( user != acclinks.end(), "can not find linked account at another chain");
+
+    acclinks.modify( user, same_payer, [&]( auto& u ) {
+       u.pending_to_eth.amount = 0;
+       u.memo = "";
+    });
+}
+
+void token::confirmswap( const name& acc )
+{
+    require_auth( get_self() );
+    auto user = acclinks.find( acc.value );
+
+    check( user != acclinks.end(), "can not find linked account at another chain");
+
+   sub_balance( acc, user->pending_to_eth );
+
+    acclinks.modify( user, same_payer, [&]( auto& u ) {
+       u.pending_to_eth.amount = 0;
+    });
+    
+    require_recipient( acc );
 }
 
 void token::create( const name&   issuer,
@@ -125,6 +172,9 @@ void token::transfer( const name&    from,
     check( quantity.amount > 0, "must transfer positive quantity" );
     check( quantity.symbol == st.supply.symbol, "symbol precision mismatch" );
     check( memo.size() <= 256, "memo has more than 256 bytes" );
+
+    auto user = acclinks.find( from.value );
+    check( quantity.amount <= user->pending_to_eth.amount, "cannot transfer tokens awaiting swap to another chain");
 
     auto payer = has_auth( to ) ? to : from;
 
