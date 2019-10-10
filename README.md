@@ -14,6 +14,8 @@ The provided contracts are reusable and anyone can establish a swap channel betw
 
 - CLO <-> EOS swap contract at Callisto mainnet: [0xfb03d543afd48934414e50cf5bc5bb990aa3ce04](https://explorer2.callisto.network/addr/0xfb03d543afd48934414e50cf5bc5bb990aa3ce04)
 
+- Dexaran's account holding 500 CLO tokens (CLEOS) as the result of example crosschain swap: [dexaraniiznx](https://bloks.io/account/dexaraniiznx) 
+
 ## Swapping contracts structure
 
 The "CLO to EOS swap channel" consists of two parts: CLO smart-contract and a token on EOS mainnet. We allow users to freeze their CLO at Callisto mainnet and get the corresponding amount of tokens at EOS mainnet in exchange. A user can swap EOS tokens back to CLO at any time.  With the current implementation of the swap channel, no fee will be charged.
