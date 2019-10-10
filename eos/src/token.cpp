@@ -188,9 +188,9 @@ void token::sub_balance( const name& owner, const asset& value ) {
    accounts from_acnts( get_self(), owner.value );
 
    const auto& from = from_acnts.get( value.symbol.code().raw(), "no balance object found" );
-   const auto& user = acclinks.find( from.value );
+   const auto& user = acclinks.find( owner.value );
    check( from.balance.amount >= value.amount, "overdrawn balance" );
-   check( from.balance.amount - value.amount >= user->pending_to_eth, "remaining account balance must exceed swap allocation" );
+   check( from.balance.amount - value.amount >= user->pending_to_eth.amount, "remaining account balance must exceed swap allocation" );
 
    from_acnts.modify( from, owner, [&]( auto& a ) {
          a.balance -= value;
