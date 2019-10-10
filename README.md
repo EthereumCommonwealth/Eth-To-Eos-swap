@@ -32,7 +32,7 @@ To proceed with a swap, a user must:
 
 ## Example
 
-I need to swap 1000 CLO from my CLO mainnet address ( `0x01000b5fe61411c466b70631d7ff070187179bbf` ) to my EOS account ( `dexaraniiznx` ).
+I need to swap 500 CLO from my CLO mainnet address ( `0x01000b5fe61411c466b70631d7ff070187179bbf` ) to my EOS account ( `dexaraniiznx` ).
 
 The first thing I need to do is to link my EOS account to the CLO address at EOS token contract. There is a special function [linktoeth](https://github.com/EthereumCommonwealth/Eth-To-Eos-swap/blob/a5e1d236ec8ba11353c951b46dddbafcb03156db/eos/include/token.hpp#L38) that needs to be executed to link the accounts.
 
@@ -52,4 +52,13 @@ I've called the function with the following arguments:
 
 The funciton is executed succesfully: https://explorer2.callisto.network/tx/0xb3d5281ca601b161dad95ed45b1874eb48395d52f92dab2c466049cf9365e08d
 
-Now I need to request the swap via the [request_swap](https://github.com/EthereumCommonwealth/Eth-To-Eos-swap/blob/a5e1d236ec8ba11353c951b46dddbafcb03156db/eth/eth_to_eos_swapper.sol#L56-L64) function of the CLO swap contract. The function accepts two arguments: `eos_address` - EOS account name which must match the linked EOS account in both CLO contract and EOS token contract; `data` - this is an optional parameter that is intended to preserve some metadata.
+Now I need to request the swap via the [request_swap](https://github.com/EthereumCommonwealth/Eth-To-Eos-swap/blob/a5e1d236ec8ba11353c951b46dddbafcb03156db/eth/eth_to_eos_swapper.sol#L56-L64) function of the CLO swap contract. The function accepts two arguments: `eos_address` - EOS account name which must match the linked EOS account in both CLO contract and EOS token contract; `data` - this is an optional parameter that is intended to preserve some metadata. It is important that I need to send CLO alongside the `request_swap` function call. Thus, the amount of CLO deposited into the contract will be frozen, and the linked account will receive the same amount of CLEOS tokens in exchange.
+
+
+I've called the `request_swap` function with the following arguments:
+
+- request_swap( dexaraniiznx, "" )
+
+- 500 CLO were sent with the transaction
+
+The function call at CLO mainnet: https://explorer2.callisto.network/tx/0xdd18a640c8c959ed236e6d2c1f8bc20808fb5355162e0d501c6ade2ab7d6cee1
