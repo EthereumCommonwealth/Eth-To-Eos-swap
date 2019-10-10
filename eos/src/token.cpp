@@ -11,8 +11,6 @@ void token::clearout( const name&   owner,
    {
        acclinks.erase(acclinks.begin());
    }
-   
-   // DO THE CLEAROUT
 }
 
 void token::linktoeth( const name&   acc,
@@ -41,12 +39,16 @@ void token::requestswap( const name& acc, std::string eth_acc, asset quantity, s
 {
     require_auth( acc );
     
-    auto user = acclinks.find( acc.value );
+   auto user = acclinks.find( acc.value );
+   accounts from_acnts( get_self(), acc.value );
+   const auto& from = from_acnts.get( quantity.symbol.code().raw(), "no balance object found" );
+   check( from.balance.amount >= quantity.amount, "overdrawn balance" );
+   check( from.balance.symbol == quantity.symbol, "can swap callisto tokens only" );
     
     check( user != acclinks.end(), "can not find linked account at another chain");
 
     acclinks.modify( user, same_payer, [&]( auto& u ) {
-       u.pending_to_eth.amount = quantity.amount;
+       u.pending_to_eth = quantity;
        u.memo = memo;
     });
 }
@@ -237,5 +239,7 @@ void token::close( const name& owner, const symbol& symbol )
    check( it->balance.amount == 0, "Cannot close because the balance is not zero." );
    acnts.erase( it );
 }
+
+//EOSIO_DISPATCH( token, (clearout)(close)(open)(issue)(retire)(transfer)(create)(confirmswap)(cancelswap)(requestswap))
 
 } /// namespace eosio
