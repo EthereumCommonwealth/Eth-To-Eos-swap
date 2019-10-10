@@ -6,6 +6,12 @@ My swapping method involves "pegged token" creation at EOS mainnet. We allow any
 
 The provided contracts are reusable and anyone can establish a swap channel between EOS and any Ethereum-compatible chain including Ethereum, Ethereum CLassic, UBQ, Expanse and others.
 
+## Currently deployed contracts
+
+- CLEOS token at EOS mainnet: [callistotokn](https://bloks.io/account/callistotokn)
+
+- CLO <-> EOS swap contract at Callisto mainnet: [0xfb03d543afd48934414e50cf5bc5bb990aa3ce04](https://explorer2.callisto.network/addr/0xfb03d543afd48934414e50cf5bc5bb990aa3ce04)
+
 ## Swapping contracts structure
 
 The "CLO to EOS swap channel" consists of two parts: CLO smart-contract and a token on EOS mainnet. We allow users to freeze their CLO at Callisto mainnet and get the corresponding amount of tokens at EOS mainnet in exchange. A user can swap EOS tokens back to CLO at any time.  With the current implementation of the swap channel, no fee will be charged.
