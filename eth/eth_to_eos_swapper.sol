@@ -95,8 +95,6 @@ contract EthToEosSwaplinker {
     
     function process_swap_from_eos(address clo_address, string eos_address, uint amount, string data) only_owner
     {
-        require(crosschain_links[clo_address].exist);
-        
         swapped_to_eos -= amount;
         crosschain_links[clo_address].pending_withdrawal = amount;
         
