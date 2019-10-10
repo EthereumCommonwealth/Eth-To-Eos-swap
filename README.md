@@ -81,3 +81,6 @@ https://bloks.io/transaction/2bedadb939e1fd4dfdea8c93d6383451be89a048c1fb5f76a6c
 
 
 
+As the result, I have my CLO tokens (CLEOS) at the EOS mainnet: 
+
+![CLEOS_tokens](https://user-images.githubusercontent.com/26142412/66598155-ed900480-eb8f-11e9-8f07-a6c3ec8c275f.png)
