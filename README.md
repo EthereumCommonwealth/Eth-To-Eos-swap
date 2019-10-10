@@ -38,5 +38,18 @@ The first thing I need to do is to link my EOS account to the CLO address at EOS
 
 I have succesfully executed the `linktoeth` function: https://bloks.io/transaction/418a92a1a454bda7b431d5b51ed2077dcc7caa1590e0267c519029ddf0c6fdc5
 
-The function accepts two parameters: `acc` - the name of EOS account and `eth_acc` - the hex address at Ethereum-based chain (in my case its CLO chain, however we can use the same address at multiple Ethereum chains).
+The function accepts two arguments: `acc` - the name of EOS account and `eth_acc` - the hex address at Ethereum-based chain (in my case its CLO chain, however we can use the same address at multiple Ethereum chains).
 
+I've called the function with the following arguments:
+
+- linktoeth( dexaraniiznx, 0x01000b5fe61411c466b70631d7ff070187179bbf )
+
+Then I need to confirm this linking of accounts at CLO contract. I need to call the [link](https://github.com/EthereumCommonwealth/Eth-To-Eos-swap/blob/a5e1d236ec8ba11353c951b46dddbafcb03156db/eth/eth_to_eos_swapper.sol#L41-L54) function of the CLO contract to do so. The function accepts EOS account name as a parameter. In this step it is important that I've called the function from my CLO address that matches the linked address at EOS contract.
+
+I've called the function with the following arguments:
+
+- link( dexaraniiznx )
+
+The funciton is executed succesfully: https://explorer2.callisto.network/tx/0xb3d5281ca601b161dad95ed45b1874eb48395d52f92dab2c466049cf9365e08d
+
+Now I need to request the swap via the [request_swap](https://github.com/EthereumCommonwealth/Eth-To-Eos-swap/blob/a5e1d236ec8ba11353c951b46dddbafcb03156db/eth/eth_to_eos_swapper.sol#L56-L64) function of the CLO swap contract. The function accepts two arguments: `eos_address` - EOS account name which must match the linked EOS account in both CLO contract and EOS token contract; `data` - this is an optional parameter that is intended to preserve some metadata.
