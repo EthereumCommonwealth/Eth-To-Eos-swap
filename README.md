@@ -77,7 +77,6 @@ Then Callisto Relay should mint the CLEOS token. Here is the minting transaction
 Once the tokens are minted the Callisto Relay must send them to the account which is linked to the swap requesters address at CLO chain.  `memo` of the transaction must match the `data` of the swap request. In my case the `dexaraniiznx` account is linked to my `0x01000b5fe61411c466b70631d7ff070187179bbf` address, so the Callisto Relay should send the tokens to the `dexaraniiznx` account.
 
 The transaction is executed succesfully at EOS mainnet:
-
 https://bloks.io/transaction/2bedadb939e1fd4dfdea8c93d6383451be89a048c1fb5f76a6c62d87e94c5b6d
 
 
