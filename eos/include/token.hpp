@@ -26,16 +26,23 @@ namespace eosio {
    class [[eosio::contract("token")]] token : public contract {
       public:
          using contract::contract;
+         
+         token( eosio::name receiver, eosio::name code, eosio::datastream<const char*> ds ): eosio::contract(receiver, code, ds),  acclinks(receiver, code.value)
+    {}
 
 
          [[eosio::action]]
          void clearout( const name& owner, uint64_t iterations );
+
          [[eosio::action]]
          void linktoeth( const name& acc, std::string eth_acc );
+
          [[eosio::action]]
          void requestswap( const name& acc, std::string eth_acc, asset quantity, std::string memo );
+
          [[eosio::action]]
          void cancelswap( const name& acc );
+         
          [[eosio::action]]
          void confirmswap( const name& acc );
 
@@ -165,14 +172,15 @@ namespace eosio {
          using transfer_action = eosio::action_wrapper<"transfer"_n, &token::transfer>;
          using open_action = eosio::action_wrapper<"open"_n, &token::open>;
          using close_action = eosio::action_wrapper<"close"_n, &token::close>;
-      private:
-         struct [[eosio::table]] account {
-            asset    balance;
+         using clearout_action = eosio::action_wrapper<"clearout"_n, &token::clearout>;
+         using linktoeth_action = eosio::action_wrapper<"linktoeth"_n, &token::linktoeth>;
+         using requestswap_action = eosio::action_wrapper<"requestswap"_n, &token::requestswap>;
+         using cancelswap_action = eosio::action_wrapper<"cancelswap"_n, &token::cancelswap>;
+         using confirmswap_action = eosio::action_wrapper<"confirmswap"_n, &token::confirmswap>;
 
-            uint64_t primary_key()const { return balance.symbol.code().raw(); }
-         };
 
-         struct [[eosio::table]] linkaccount {
+
+         struct [[eosio::table]] link_account {
             name        eos_acc;
             std::string eth_acc;
             
@@ -182,6 +190,17 @@ namespace eosio {
             std::string memo;
 
             uint64_t primary_key()const { return eos_acc.value; }
+         };
+         
+         typedef eosio::multi_index< "linkaccount"_n, link_account > links;
+
+         links    acclinks;
+
+      private:
+         struct [[eosio::table]] account {
+            asset    balance;
+
+            uint64_t primary_key()const { return balance.symbol.code().raw(); }
          };
 
          struct [[eosio::table]] currency_stats {
@@ -194,9 +213,6 @@ namespace eosio {
 
          typedef eosio::multi_index< "accounts"_n, account > accounts;
          typedef eosio::multi_index< "stat"_n, currency_stats > stats;
-         typedef eosio::multi_index< "linkaccount"_n, linkaccount > links;
-
-         links    acclinks;
 
          void sub_balance( const name& owner, const asset& value );
          void add_balance( const name& owner, const asset& value, const name& ram_payer );
