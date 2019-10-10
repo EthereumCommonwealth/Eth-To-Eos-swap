@@ -62,3 +62,7 @@ I've called the `request_swap` function with the following arguments:
 - 500 CLO were sent with the transaction
 
 The function call at CLO mainnet: https://explorer2.callisto.network/tx/0xdd18a640c8c959ed236e6d2c1f8bc20808fb5355162e0d501c6ade2ab7d6cee1
+
+Then the Callisto Relay will execute the swap. Callisto Relay should check all account links at CLO contract. Whenever it faces an account link with positive pending swap tokens Callisto Relay should check if there is a matching link in EOS token contract. If the matching link exists then Callisto Relay will freeze the CLO at swap contract and mint the CLEOS tokens at EOS chain via the [issue](https://github.com/EthereumCommonwealth/Eth-To-Eos-swap/blob/master/eos/include/token.hpp#L76) function.
+
+Callisto Relay will be provided by Callisto team in the near future once the contracts are tested and ready for mass use. Currently the crosschain swaps are handled manually.
