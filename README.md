@@ -63,6 +63,22 @@ I've called the `request_swap` function with the following arguments:
 
 The function call at CLO mainnet: https://explorer2.callisto.network/tx/0xdd18a640c8c959ed236e6d2c1f8bc20808fb5355162e0d501c6ade2ab7d6cee1
 
-Then the Callisto Relay will execute the swap. Callisto Relay should check all account links at CLO contract. Whenever it faces an account link with positive pending swap tokens Callisto Relay should check if there is a matching link in EOS token contract. If the matching link exists then Callisto Relay will freeze the CLO at swap contract and mint the CLEOS tokens at EOS chain via the [issue](https://github.com/EthereumCommonwealth/Eth-To-Eos-swap/blob/master/eos/include/token.hpp#L76) function.
+Then the Callisto Relay will execute the swap. Callisto Relay should check all account links at CLO contract. Whenever it faces an account link with positive pending swap tokens Callisto Relay should check if there is a matching link in EOS token contract. If the matching link exists then Callisto Relay will freeze the CLO at swap contract and mint the CLEOS tokens at EOS chain via the [issue](https://github.com/EthereumCommonwealth/Eth-To-Eos-swap/blob/master/eos/include/token.hpp#L76) function. NOTE: `memo` of the EOS issue transaction should match the `data` of the account link in CLO contract.
 
 Callisto Relay will be provided by Callisto team in the near future once the contracts are tested and ready for mass use. Currently the crosschain swaps are handled manually.
+
+
+Callisto Relay confirms the swap with the transaction: https://explorer2.callisto.network/tx/0xbd663a0c2d30d7ba9affe45de74201ea4bf8389e454977778f0bbd3e8fbeac4f
+
+[process_swap_to_eos](https://github.com/EthereumCommonwealth/Eth-To-Eos-swap/blob/a5e1d236ec8ba11353c951b46dddbafcb03156db/eth/eth_to_eos_swapper.sol#L85-L94) function is used to confirm the swap if the provided linked addresses match linked addresses at EOS token contract.
+
+Then Callisto Relay should mint the CLEOS token. Here is the minting transaction: https://bloks.io/transaction/7dc5cf0df79977bcf3e5458e2570928705597ca9d292cf2f5f4c9f678628aebd
+
+Once the tokens are minted the Callisto Relay must send them to the account which is linked to the swap requesters address at CLO chain.  `memo` of the transaction must match the `data` of the swap request. In my case the `dexaraniiznx` account is linked to my `0x01000b5fe61411c466b70631d7ff070187179bbf` address, so the Callisto Relay should send the tokens to the `dexaraniiznx` account.
+
+The transaction is executed succesfully at EOS mainnet:
+
+https://bloks.io/transaction/2bedadb939e1fd4dfdea8c93d6383451be89a048c1fb5f76a6c62d87e94c5b6d
+
+
+
