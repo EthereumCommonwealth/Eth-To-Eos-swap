@@ -175,8 +175,8 @@ void token::transfer( const name&    from,
     check( quantity.symbol == st.supply.symbol, "symbol precision mismatch" );
     check( memo.size() <= 256, "memo has more than 256 bytes" );
 
-    auto user = acclinks.find( from.value );
-    check( quantity.amount <= user->pending_to_eth.amount, "cannot transfer tokens awaiting swap to another chain");
+    //auto user = acclinks.find( from.value );
+    //check( quantity.amount >= user->pending_to_eth.amount, "cannot transfer tokens awaiting swap to another chain");
 
     auto payer = has_auth( to ) ? to : from;
 
@@ -188,7 +188,9 @@ void token::sub_balance( const name& owner, const asset& value ) {
    accounts from_acnts( get_self(), owner.value );
 
    const auto& from = from_acnts.get( value.symbol.code().raw(), "no balance object found" );
+   const auto& user = acclinks.find( from.value );
    check( from.balance.amount >= value.amount, "overdrawn balance" );
+   check( from.balance.amount - value.amount >= user->pending_to_eth, "remaining account balance must exceed swap allocation" );
 
    from_acnts.modify( from, owner, [&]( auto& a ) {
          a.balance -= value;
