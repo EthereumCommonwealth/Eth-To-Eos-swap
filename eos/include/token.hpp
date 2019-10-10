@@ -185,7 +185,6 @@ namespace eosio {
             std::string eth_acc;
             
             asset       pending_to_eth;
-            asset       pending_to_eos;
 
             std::string memo;
 
