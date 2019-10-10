@@ -6,7 +6,7 @@ My swapping method involves "pegged token" creation at EOS mainnet. We allow any
 
 The provided contracts are reusable and anyone can establish a swap channel between EOS and any Ethereum-compatible chain including Ethereum, Ethereum CLassic, UBQ, Expanse and others.
 
-#### Disclaimer: This is the very first implementation of the contracts. It is not advised to use it with large quantities of funds at this stage. We will proceed with a security audit and update the contract if it will be necessary.
+### (!) Disclaimer: This is the very first implementation of the contracts. It is not advised to use it with large quantities of funds at this stage. We will proceed with a security audit and update the contract if it will be necessary.
 
 ## Currently deployed contracts
 
