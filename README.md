@@ -29,3 +29,7 @@ To proceed with a swap, a user must:
 4. Submit the swap request.
 
 5. Wait for CLO team to execute the swap.
+
+## Example
+
+I need to swap 1000 CLO from my CLO mainnet address ( `0x01000b5fe61411c466b70631d7ff070187179bbf` ) to my EOS account ( `dexaraniiznx` ).
