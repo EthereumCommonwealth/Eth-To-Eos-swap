@@ -33,3 +33,10 @@ To proceed with a swap, a user must:
 ## Example
 
 I need to swap 1000 CLO from my CLO mainnet address ( `0x01000b5fe61411c466b70631d7ff070187179bbf` ) to my EOS account ( `dexaraniiznx` ).
+
+The first thing I need to do is to link my EOS account to the CLO address at EOS token contract. There is a special function [linktoeth](https://github.com/EthereumCommonwealth/Eth-To-Eos-swap/blob/a5e1d236ec8ba11353c951b46dddbafcb03156db/eos/include/token.hpp#L38) that needs to be executed to link the accounts.
+
+I have succesfully executed the `linktoeth` function: https://bloks.io/transaction/418a92a1a454bda7b431d5b51ed2077dcc7caa1590e0267c519029ddf0c6fdc5
+
+The function accepts two parameters: `acc` - the name of EOS account and `eth_acc` - the hex address at Ethereum-based chain (in my case its CLO chain, however we can use the same address at multiple Ethereum chains).
+
